@@ -4,7 +4,6 @@ const cors = require("cors");
 const { uuid, isUuid } = require("uuidv4");
 
 const app = express();
-const routes = express.Router();
 
 app.use(express.json());
 app.use(cors());
@@ -57,10 +56,6 @@ app.put("/repositories/:id", (request, response) => {
 
   const repository = mRepositories.find(repo => repo.id === id);
 
-  // if (!repository) {
-  //   return response.status(400).json({ error: 'Repository not found.' });
-  // }
-
   repository.title = title;
   repository.url = url;
   repository.techs = techs;
@@ -74,11 +69,6 @@ app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
   const repositoryIndex = mRepositories.findIndex(repo => repo.id === id);
 
-  // if (repositoryIndex < 0) {
-  //   return response.status(400).json({ error: 'Repository not found to delete.' });
-  // }
-
-  //console.log(repositoryIndex);
   mRepositories.splice(repositoryIndex, 1);
   return response.status(204).send();
 
@@ -88,10 +78,6 @@ app.post("/repositories/:id/like", (request, response) => {
   const { id } = request.params;
 
   const repository = mRepositories.find(repo => repo.id === id);
-
-  // if (!repository) {
-  //   return response.status(400).json({ error: 'Repository not found.' });
-  // }
 
   repository.likes++;
   return response.json(repository);
